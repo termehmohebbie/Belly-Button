@@ -45,9 +45,9 @@ function buildGaugeChart(sample) {
 }
 
 
-//======================================================//
+
 //=============== Build a GAUGE Chart ==================//
-//======================================================//
+
 function gaugeChart(data) {
   console.log("gaugeChart", data);
 
@@ -132,52 +132,7 @@ function buildCharts(sample) {
       var labels = result.otu_labels;
       var values = result.sample_values;
       
-    //======================================================//
-    //================ Build a BUBBLE Chart=================// 
-    //======================================================//
-    
-    //   var LayoutBubble = {
-    //     margin: { t: 0 },
-    //     xaxis: { title: "OTU ID" },
-    //     hovermode: "closest",
-    //     };
-    
-    //     var DataBubble = [ 
-    //     {
-    //       x: ids,
-    //       y: values,
-    //       text: labels,
-    //       mode: "markers",
-    //       marker: {
-    //         color: ids,
-    //         size: values,
-    //         }
-    //     }
-    //   ];
-    
-    //   Plotly.newPlot("bubble", DataBubble, LayoutBubble);
-    
-    
-    //=========================================================//
-    //===============  Build a BAR Chart=======================//
-    //=========================================================// 
-    //   var bar_data =[
-    //     {
-    //       y:ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse(),
-    //       x:values.slice(0,10).reverse(),
-    //       text:labels.slice(0,10).reverse(),
-    //       type:"bar",
-    //       orientation:"h"
-    
-    //     }
-    //   ];
-    
-    //   var barLayout = {
-    //     title: "Top 10 Bacteria Cultures Found",
-    //     margin: { t: 30, l: 150 }
-    //   };
-    
-    //   Plotly.newPlot("bar", bar_data, barLayout);
+
     });
     }
 function init() {
