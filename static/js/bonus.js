@@ -2,63 +2,42 @@
 var arrColorsG = ["darkturquoise", "mediumturquoise", "turquoise", "paleturquoise", "mintcream", "aliceblue", "lightgray", "gray", "dimgray", "white"];
 
 
-// Use`d 3.json` to fetch the metadata for a sample
-// Hint: Inside the loop, you will need to use d3 to append new
-// tags for each key-value in the metadata.
+// Using d3.json to fetch the metadata for a sample
 function buildMetadata(sample) {
   d3.json(url).then((data) => {
     var metadata= data.metadata;
     var resultsarray= metadata.filter(sampleobject => 
       sampleobject.id == sample);
     var result= resultsarray[0]
-// Use d3 to select the panel with id of `#sample-metadata`
+// Using d3 to select the panel
     var panel = d3.select("#sample-metadata");
-// Use `.html("") to clear any existing metadata
+// Using .html("") to clear any existing metadata
     panel.html("");
-// Use `Object.entries` to add each key and value pair to the panel
+// Using Object.entries to add each key and value pair to the panel
     Object.entries(result).forEach(([key, value]) => {
       panel.append("h6").text(`${key}: ${value}`);
     });
-
-  //buildGauge(result.wfreq)
-
-
   });
 }
 
-//=============Gauge Chart Function=======================//
-
+//Creating a function for Gauge Chart
 function buildGaugeChart(sample) {
-  console.log("sample", sample);
-
   d3.json(url).then(data =>{
-
     var objs = data.metadata;
-    //console.log("objs", objs);
-
     var matchedSampleObj = objs.filter(sampleData => 
       sampleData["id"] === parseInt(sample));
-    //console.log("buildGaugeChart matchedSampleObj", matchedSampleObj);
-
-    gaugeChart(matchedSampleObj[0]);
+      gaugeChart(matchedSampleObj[0]);
  });   
 }
 
-
-
-//=============== Build a GAUGE Chart ==================//
-
+//Building a GAUGE Chart
 function gaugeChart(data) {
-  console.log("gaugeChart", data);
-
   if(data.wfreq === null){
     data.wfreq = 0;
-
   }
-
   let degree = parseInt(data.wfreq) * (180/10);
 
-  // Trig to calc meter point
+  // Trig to calculate meter point
   let degrees = 180 - degree;
   let radius = .5;
   let radians = degrees * Math.PI / 180;
@@ -115,31 +94,23 @@ function gaugeChart(data) {
   };
 
   Plotly.newPlot('gauge', trace, layout, {responsive: true});
-
 }
-//=============Bubble&Bar Chart Functions=======================//
 
+//Creating Bubble & Bar Chart
 function buildCharts(sample) {
-
-    // Use `d3.json` to fetch the sample data for the plots
     d3.json(url).then((data) => {
       var samples= data.samples;
       var resultsarray= samples.filter(sampleobject => 
           sampleobject.id == sample);
       var result= resultsarray[0]
-    
       var ids = result.otu_ids;
       var labels = result.otu_labels;
       var values = result.sample_values;
-      
-
     });
-    }
+ }
+
 function init() {
-    // Grab a reference to the dropdown select element
     var selector = d3.select("#selDataset");
-    
-    // Use the list of sample names to populate the select options
     d3.json(url).then((data) => {
       var sampleNames = data.names;
       sampleNames.forEach((sample) => {
@@ -148,26 +119,19 @@ function init() {
           .text(sample)
           .property("value", sample);
       });
-    
-      // Use the first sample from the list to build the initial plots
       const firstSample = sampleNames[0];
       buildMetadata(firstSample);
       buildCharts(firstSample);
       buildGaugeChart(firstSample)
-    
-    
     });
-    }
-    
-    function optionChanged(newSample) {
+  }
+   
+  function optionChanged(newSample) {
     // Get new data each time a new sample is selected
     buildMetadata(newSample);
     buildCharts(newSample);
-    buildGaugeChart(newSample)
+    buildGaugeChart(newSample) 
+  }
     
-    }
-    
-    
-    
-    // Initialize the dashboard
-    init();
+  // Initialize the dashboard
+  init();
